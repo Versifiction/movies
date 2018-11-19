@@ -1,0 +1,48 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    margin-right: 2rem;
+    margin-bottom: 2rem;
+    width: 250px;
+    flex-direction: inherit !important;
+    border-radius: inherit !important;
+}
+
+.card-title {
+    font-weight: bold;
+    margin-bottom: 1rem !important;
+    margin-top: 1rem !important;
+}
+
+.card-subtitle {
+    margin-bottom: 1rem !important;
+}
+
+button {
+    border-radius: inherit !important;
+}
+
+svg {
+    cursor: pointer;
+}
+
+svg.MuiSvgIcon-root-1.App-Film-Like:hover {
+    fill: green;
+}
+
+svg.MuiSvgIcon-root-1.App-Film-Dislike:hover {
+    fill: #dc3545;
+}
+
+.App-Films {
+    margin-top: 2rem;
+}
+
+.App-Film-Count-Likes, .App-Film-Count-Dislikes {
+    display: inline-block !important;
+    margin-right: 1rem;
+}

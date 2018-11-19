@@ -1,0 +1,28 @@
+.App-Select {
+    margin-top: 2rem;
+}
+
+.select-button {
+    color: #fff;
+    background-color: blue;
+    border-color: blue;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    font-size: 1rem;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+label {
+    margin-right: 0.5rem;
+    margin-bottom: inherit !important;
+}
