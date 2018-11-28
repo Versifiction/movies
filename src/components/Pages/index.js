@@ -3,32 +3,44 @@ import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 
 import './Pages.css';
 
-const Pages = () => {
+const Pages = ({ currentPage, getNextPage, getPreviousPage, goToPage, moviesList, state, itemsPerPage, currentMovies }) => {
+  const pageNumbers = [];
+
+  if (state.selectCategoryValue === "all") {
+    for (let i = 1; i <= Math.ceil(moviesList.length / itemsPerPage); i++) {
+      pageNumbers.push(i);
+    }
+  } else if (state.selectCategoryValue !== "all") {
+    for (let i = 1; i <= Math.ceil(currentMovies.length / itemsPerPage); i++) {
+      pageNumbers.push(i);
+    }
+  }
+
+  const renderPageNumbers = pageNumbers.map(number => {
+    return (
+      <PaginationItem
+        key={number}
+        id={number}
+        onClick={() => goToPage(`${number}`)}
+      >
+        <PaginationLink>
+          {number}
+        </PaginationLink>
+      </PaginationItem>
+    );
+  });
+
   return (
     <div className="App-Pagination">
       <Pagination
         size="lg"
       >
         <PaginationItem>
-          <PaginationLink previous href="#" />
+          <PaginationLink previous href="#" onClick={getPreviousPage} />
         </PaginationItem>
+        {renderPageNumbers}
         <PaginationItem>
-          <PaginationLink href="#">
-            1
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#">
-            2
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#">
-            3
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink next href="#" />
+          <PaginationLink next href="#" onClick={getNextPage}/>
         </PaginationItem>
       </Pagination>
     </div>

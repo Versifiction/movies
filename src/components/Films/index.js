@@ -5,7 +5,7 @@ import './Films.css';
 import ThumbUpAlt from '@material-ui/icons/ThumbUpAlt';
 import ThumbDownAlt from '@material-ui/icons/ThumbDownAlt';
 
-const Films = ({ moviesList, deleteMovie, likeMovie, dislikeMovie, state }) => {
+const Films = ({ moviesList, deleteMovie, likeMovie, dislikeMovie, state, currentMovies }) => {
     function compareStrings(a, b) {
         a = a.toLowerCase();
         b = b.toLowerCase();
@@ -17,7 +17,7 @@ const Films = ({ moviesList, deleteMovie, likeMovie, dislikeMovie, state }) => {
         return compareStrings(a.title, b.title);
     })
 
-    const allMoviesDisplayed = moviesList.map(movie =>
+    const renderMovies = currentMovies.map(movie =>
         <Card key={movie.id} className="App-Film">
             <CardBody>
             <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
@@ -43,10 +43,10 @@ const Films = ({ moviesList, deleteMovie, likeMovie, dislikeMovie, state }) => {
             </Button>
             </CardBody>
         </Card>
-    )
+    );
 
-    const specificCategoryMoviesDisplayed = moviesList.map(movie =>
-        movie.category === state.selectValue &&
+    const renderSpecificMovies = currentMovies.map(movie =>
+        movie.category === state.selectCategoryValue &&
         <Card key={movie.id} className="App-Film">
             <CardBody>
             <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
@@ -77,8 +77,7 @@ const Films = ({ moviesList, deleteMovie, likeMovie, dislikeMovie, state }) => {
     return (
         <div className="App-Films">
             <Container>
-                {state.selectValue === "all" && allMoviesDisplayed}
-                {state.selectValue !== "all" && specificCategoryMoviesDisplayed}
+                {state.selectCategoryValue === "all" ? renderMovies : renderSpecificMovies}
             </Container>
         </div>
     );

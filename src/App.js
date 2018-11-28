@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 
 import './App.css';
 import Title from '../src/components/Title';
-import Select from '../src/components/Select';
+import SelectCategory from '../src/components/SelectCategory';
 import Films from '../src/components/Films';
+import SelectPages from '../src/components/SelectPages';
 import Pages from '../src/components/Pages';
 import moviesList from '../src/datas/movies';
 // eslint-disable-next-line
@@ -16,8 +17,13 @@ class App extends Component {
       movies: moviesList,
       like: false,
       dislike: false,
-      selectValue: "all",
-    }
+      selectCategoryValue: "all",
+      currentPage: 1,
+      itemsPerPage: 3,
+    };
+    this.getNextPage = this.getNextPage.bind(this);
+    this.getPreviousPage = this.getPreviousPage.bind(this);
+    this.goToPage = this.goToPage.bind(this);
   }
 
   deleteMovie = id => () => {
@@ -25,9 +31,39 @@ class App extends Component {
     this.setState({ movies: moviesDeleted });
   }
 
-  handleSelectChange = (event) => {
+  getNextPage = () => {
+    let state = this.state;
+    if (state.currentPage < 3) {
+      this.setState({
+        currentPage: state.currentPage + 1,
+      });
+    }
+  }
+
+  getPreviousPage = () => {
+    let state = this.state;
+    if (state.currentPage > 1) {
+      this.setState({
+        currentPage: state.currentPage - 1,
+      });
+    }
+  }
+
+  goToPage = (val) => {
     this.setState({
-      selectValue: event.target.value
+      currentPage: val,
+    });
+  }
+
+  handleSelectCategoryChange = (event) => {
+    this.setState({
+      selectCategoryValue: event.target.value
+    })
+  }
+
+  handleSelectPagesChange = (event) => {
+    this.setState({
+      itemsPerPage: event.target.value
     })
   }
 
@@ -78,22 +114,45 @@ class App extends Component {
   }
 
   render() {
-    const { movies } = this.state;
+    const { movies, currentPage, itemsPerPage } = this.state;
+    const indexOfLastMovie = currentPage * itemsPerPage;
+    const indexOfFirstMovie = indexOfLastMovie - itemsPerPage;
+    const currentMovies = movies.slice(indexOfFirstMovie, indexOfLastMovie);
+    console.log('currentpage: ' + currentPage);
+    console.log('itemsperpage: ' + itemsPerPage);
+    console.log('idnexoffirstmovie: ' +indexOfFirstMovie);
+    console.log('indexoflastmovie: ' +indexOfLastMovie);
+    console.log(currentMovies);
+
     return (
       <div className="App">
         <Title />
-        <Select
+        <SelectCategory
           moviesList={movies}
-          handleChange={this.handleSelectChange}
-          />
+          handleCategoryChange={this.handleSelectCategoryChange}
+        />
         <Films
           moviesList={movies}
+          currentMovies={currentMovies}
           state={this.state}
           deleteMovie={this.deleteMovie}
-          likeMovie ={this.likeMovie}
-          dislikeMovie ={this.dislikeMovie}
+          likeMovie={this.likeMovie}
+          dislikeMovie={this.dislikeMovie}
         />
-        <Pages />
+        <SelectPages
+          filmsPerPages={this.filmsPerPages}
+          handlePagesChange={this.handleSelectPagesChange}
+        />
+        <Pages
+          moviesList={movies}
+          currentMovies={currentMovies}
+          currentPage={currentPage}
+          getNextPage={this.getNextPage}
+          getPreviousPage={this.getPreviousPage}
+          goToPage={this.goToPage}
+          itemsPerPage={itemsPerPage}
+          state={this.state}
+        />
       </div>
     );
   }

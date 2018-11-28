@@ -1,9 +1,9 @@
 import React from 'react';
 import { Container } from 'reactstrap';
 
-import './Select.css';
+import './SelectCategory.css';
 
-const Select = ({ moviesList, handleChange }) => {
+const SelectCategory = ({ moviesList, handleCategoryChange }) => {
   var uniqueArray = function(arrArg) {
     return arrArg.filter(function(elem, pos,arr) {
       return arr.indexOf(elem) === pos;
@@ -19,7 +19,7 @@ const Select = ({ moviesList, handleChange }) => {
   });
 
   return (
-    <div className="App-Select">
+    <div className="App-Select-Category">
       <Container>
         <label
           htmlFor="select-control"
@@ -29,7 +29,7 @@ const Select = ({ moviesList, handleChange }) => {
         <select
           id="select-control"
           className="select-button"
-          onClick={handleChange}
+          onClick={handleCategoryChange}
         >
           <option value="all" defaultValue>Toutes les catégories</option>
           {moviesCategoriesFilteredFinal}
@@ -39,4 +39,4 @@ const Select = ({ moviesList, handleChange }) => {
   );
 }
 
-export default Select;
+export default SelectCategory;
